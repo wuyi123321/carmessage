@@ -1,0 +1,219 @@
+*{
+    margin:0;
+    padding: 0;
+}
+#content{
+     width: 100%;
+     color: #009688;
+    font-size: 14px;
+    border-collapse: collapse;
+}
+#content table tr{
+    width: 100%;
+    height: 45px;
+}
+#content tr td{
+    height: 45px;
+    padding-left: 20px;
+    border-bottom: solid #aaa 1px;
+    text-align: justify;
+}
+#content .frow{
+    width: 30%;
+}
+#content .srow{
+    width: 70%;
+}
+#content .justify{
+    height: 40px;
+    width: 60px;
+    text-align: justify;
+    line-height: 40px;
+    float: left;
+}
+#content .justify > span {
+    display: inline-block /* Opera */;
+    padding-left: 100%;
+}
+#content .line{
+    height: 12px;
+    width: 1px;
+    float: right;
+    margin-top: 15px;
+    border-right: solid #aaaaaa 1px;
+}
+#content input{
+    border: 0;
+    outline:none;
+}
+.cream{
+    margin: 15px;;
+    width: 80px;
+    height: 80px;
+    float: left;
+    border: solid #dddddd 1px;
+    border-radius: 5px;
+}
+
+#smallimages .cream{
+    margin: 15px;;
+    width: 80px;
+    height: 80px;
+    float: left;
+    border: solid #dddddd 1px;
+    border-radius: 5px;
+    position: relative;
+}
+#smallimages .cream .delete{
+    position: absolute;
+   margin-left: 60px;
+}
+#blackBg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 5;
+    color: #009688;
+    font-size: 16px;
+}
+#blackBg2{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 5;
+    padding: 0 auto;
+}
+
+#bigImg{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+}
+#bigImg img{
+    width: 100%;
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+}
+#message{
+     margin: 45% auto 0 auto;
+     width: 85%;
+     height: 100px;
+     background: #ffffff;
+     border-radius:5px;
+ }
+#message ul{
+    list-style: none;
+    width: 100%;
+    text-align: center;
+    clear: both;
+}
+
+#message ul :first-child{
+    border-bottom: solid #ccc 1px;
+    padding-top: 10px;
+}
+#message ul li{
+    margin-top: 0px;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+}
+#close{
+    margin: 5px auto;
+    width: 85%;
+    height: 50px;
+    background: #ffffff;
+    border-radius:5px;
+    text-align: center;
+    line-height: 50px;
+}
+#tijiao{
+    width: 40px;
+    height: 30px;
+   margin: 0 auto;
+   clear: both;
+
+}
+#tijiao button{
+    color: #fff;
+    background: #009688;
+}
+#chepai {
+width: 200px;
+}
+select{
+    border: 0;
+    outline:none;
+}
+#city{
+    width: 60px;
+    border: 0;
+    outline:none;
+}
+.el-input-group__append, .el-input-group__prepend {
+    border:none;
+    background: #fff;
+    color: #000;
+    vertical-align: middle;
+    display: table-cell;
+    position: relative;
+    padding: 0 10px;
+    width: 1px;
+    white-space: nowrap;
+}
+.el-select-dropdown__item.selected.hover {
+    background-color: #009688;
+}
+.el-select-dropdown__item.selected {
+    color: #fff;
+    background-color: #009688;
+}
+#number{
+    width: 60% ;
+}
+.el-table--enable-row-hover  .el-table__body tr:hover>td{
+    background-color: rgba(255,255,255,0);
+    background-clip: padding-box;
+}
+
+.el-table .cell, .el-table th>div {
+     padding-left:0px;
+     padding-right: 0px;
+    text-align: center;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+}
+#table td:hover{
+    background:#dfe6ec ;
+}
+.el-button:focus, .el-button:hover {
+    color: #009688;
+    border-color: #009688;
+}
+.el-date-table td.current:not(.disabled), .el-date-table td.end-date, .el-date-table td.start-date {
+    background-color: rgb(0, 150, 136)!important;
+    color: #fff;
+}
+.el-date-table td.today:before {
+    border-top: .5em solid #009688;
+}
+.el-time-panel__content::after, .el-time-panel__content::before {
+    background-color: #009688;
+}
+.el-time-panel__btn.confirm {
+    font-weight: 800;
+    color: #009688;
+}

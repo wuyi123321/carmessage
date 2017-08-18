@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>message</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+</head>
+<link rel="stylesheet" href="css/eleui.css">
+<link rel="stylesheet" href="css/message.css">
+<body>
+<div id="main">
+<ul id="ul">
+    <!--<li class="item">-->
+        <!--<div class="top"><span class="time">2017-08-07 10:20:26</span><span class="carNumber">粤B89283</span></div>-->
+        <!--<div class="content">-->
+            <!--<span class="cont">园 区:<span>石龙仔园区</span></span>-->
+            <!--<span class="cont">类 型:<span>乱停乱放</span></span>-->
+        <!--</div>-->
+        <!--<a href="messageFull.html"><i class="el-icon-arrow-right"></i></a>-->
+    <!--</li>-->
+    <!--<li class="item">-->
+        <!--<div class="top">-->
+            <!--<span class="time">2017-08-07 10:20:26</span>-->
+            <!--<span class="carNumber">粤B89283</span></div>-->
+        <!--<div class="content">-->
+            <!--<span class="cont">园 区:<span>石龙仔园区</span></span>-->
+            <!--<span class="cont">类 型:<span>乱停乱放</span></span>-->
+        <!--</div>-->
+        <!--<a href="messageFull.html"><i class="el-icon-arrow-right"></i></a>-->
+    <!--</li>-->
+</ul>
+</div>
+</body>
+<script src="../js/vue@2.4.js"></script>
+<script src="../js/elejs.js"></script>
+<script src="../js/jquery.js"></script>
+<script>
+    (function ($) {
+        $.getUrlParam = function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);  return null;
+        }
+    })(jQuery);
+    var plateNumber= $.getUrlParam("plateNumber");
+    var token = $.getUrlParam("token");
+    var type=["占用专用车位","占用消防通道","非停车位处停车","车辆未在18：00移出篮球场","持篮球场通行证车辆占用园内车位","其它"];
+    $.ajax({
+        type:"post",
+        url:"http://appinter.sunwoda.com/ekp/getVehiclePlateNumber.json",
+        dataType:"json",
+        data: {"token":token,"plateNumber":plateNumber},
+        success:function(data){
+            if(data.dataInfo != null){
+                     $("#ul").empty();
+                     console.log(data);
+                     data = data.dataInfo.listData;
+                     var message="";
+                     $.each(data,function (i,n) {
+                         var typeNumber = parseInt(n["fD_TYPE"]);
+                        message+=  "<li class='item'>"+
+                             "<div class='top'><span class='time'>"+n["fD_VIOLATIONDATE"]+"</span><span class='carNumber'>"+n["fD_PLATENUMBER"]+"</span></div>"+
+                        "<div class='content'>"+
+                            "<span class='cont'>园 区:<span>石龙仔园区</span></span>"+
+                        "<span class='cont'>类 型:<span>"+type[typeNumber]+"</span></span></div>"+
+                            "<a href='messageFull.html?FD_PLATENUMBER="+n["fD_PLATENUMBER"]+
+                            "&FD_NAME="+n["fD_NAME"]+
+                            "&FD_PHONE="+n["fD_PHONE"]+
+                            "&FD_POST="+n["fD_POST"]+
+                            "&FD_DEPT="+n["fD_DEPT"]+
+                            "&token="+token+
+                            "&FD_AREA="+n["fD_ARER"]+
+                            "&pT_PICTUREURL="+n["pT_PICTUREURL"]+
+                            "&fD_VIOLATIONDATE="+n["fD_VIOLATIONDATE"]+
+                            "&fD_TYPE="+type[typeNumber]+
+                            "&fD_OTHER="+n["fD_OTHER"]+
+                            "'><i class='el-icon-arrow-right'></i></a>"+
+                         "</li>";
+                     });
+                $("#ul").html(message);
+            }else {
+                $("#ul").html("<li style='text-align: center;line-height: 80px'>无违规停车数据</li>");
+            }
+        }});
+</script>
+
+<!--//<script src="js/elejs.js"></script>-->
+</html>

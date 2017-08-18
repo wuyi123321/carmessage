@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+</head>
+
+<link rel="stylesheet" href="css/from.css" type="text/css" />
+<style>
+    #content .srow{
+        color: #000000;
+    }
+</style>
+<body>
+<div id="app">
+    <table id="content" >
+        <tr>
+            <td class="frow"><div class="justify">违规日期<span></span></div><div class="line"></div></td>
+            <td class="srow" id="day">2017-07-21
+            </td>
+        </tr>
+        <tr>
+            <td><div class="justify">违规时间<span></span></div><div class="line"></div></td>
+            <td class="srow" id="time">10:05
+
+        </tr>
+        <tr>
+            <td><div class="justify">车牌<span></span></div><div class="line"></div></td>
+            <td class="srow" id="FD_PLATENUMBER">
+            </td>
+        </tr>
+        <tr>
+            <td><div class="justify">姓名<span></span></div><div class="line"></div></td>
+            <td class="srow" id="FD_NAME"></td>
+        </tr>
+        <tr>
+            <td><div class="justify">职务<span></span></div><div class="line"></div></td>
+            <td class="srow" id="FD_POST"></td>
+        </tr>
+
+        <tr>
+            <td><div class="justify">归属部门<span></span></div><div class="line"></div></td>
+            <td class="srow" id="FD_DEPT"><el-input type="text"  placeholder="请输入归属部门" v-model="FD_DEPT"></el-input></td>
+        </tr>
+
+        <tr>
+            <td><div class="justify">联系电话<span></span></div><div class="line"></div></td>
+            <td class="srow" id="FD_PHONE"><el-input type="text"  placeholder="请输入联系电话" v-model=" FD_PHONE"></el-input></td>
+        </tr>
+        <tr>
+            <td><div class="justify">违规类型<span></span></div><div class="line"></div></td>
+            <td class="srow" id="FD_TYPE">
+
+            </td>
+        </tr>
+        <tr>
+            <td><div class="justify">园区<span></span></div><div class="line"></div></td>
+            <td class="srow" id="FD_ARER">
+            </td>
+        </tr>
+        <tr>
+            <td><div class="justify">备注<span></span></div><div class="line"></div></td>
+            <td class="srow" id="FD_OTHER"></td>
+        </tr>
+
+    </table>
+    <div id="smallimages" @click='det'>
+
+    </div>
+    <div id="blackBg2" v-show="showImage" @click="close">
+
+    </div>
+</div>
+
+</body>
+<script src="../js/jquery.js"></script>
+<script>
+    (function ($) {
+        $.getUrlParam = function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);  return null;
+        }
+    })(jQuery);
+    var FD_PLATENUMBER=$.getUrlParam("FD_PLATENUMBER");
+    var FD_NAME=$.getUrlParam("FD_NAME");
+    var FD_PHONE=$.getUrlParam("FD_PHONE");
+    var FD_POST=$.getUrlParam("FD_POST");
+    var FD_DEPT=$.getUrlParam("FD_DEPT");
+    var FD_AREA=$.getUrlParam("FD_AREA");
+    var fD_VIOLATIONDATE=$.getUrlParam("fD_VIOLATIONDATE");
+    var fD_TYPE=$.getUrlParam("fD_TYPE");
+    var fD_OTHER=$.getUrlParam("fD_OTHER");
+    var pT_PICTUREURL=$.getUrlParam("pT_PICTUREURL");
+    var imageSrcs = pT_PICTUREURL.split(";");
+    var time=fD_VIOLATIONDATE.split(" ");
+    $("#day").html(time[0]);
+    $("#time").html(time[1]);
+    $("#FD_PLATENUMBER").html(FD_PLATENUMBER);
+    $("#FD_NAME").html(FD_NAME);
+    $("#FD_POST").html(FD_POST);
+    $("#FD_DEPT").html(FD_DEPT);
+    $("#FD_PHONE").html(FD_PHONE);
+    $("#FD_TYPE").html(fD_TYPE);
+    $("#FD_ARER").html(FD_AREA);
+    $("#FD_OTHER").html(fD_OTHER);
+    imageSrcs.pop();
+    for (var i=0;i<imageSrcs.length;i++){
+       $("#smallimages").append("<div class='cream'>"+
+            "<img class='smallimg' width='80px' height='80px' src='http://appinter.sunwoda.com/"+imageSrcs[i]+"'> </div>");
+    }
+    $("#blackBg2").css("display","none");
+    $("#smallimages").bind('click',[],function (event) {
+        if(event.target.className=="smallimg"){
+            $("#blackBg2").css("display","block");
+            var file=event.target.src;
+            $("#blackBg2").html("<div id='bigImg'><img src='"+file+"'/></div>");
+        }
+    });
+    $("#blackBg2").bind('click',[],function () {
+        $("#blackBg2").css("display","none");
+    });
+</script>
+</html>

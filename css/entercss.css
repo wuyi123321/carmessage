@@ -1,0 +1,139 @@
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas,caption,center, cite,code, dd, del, details, dfn, div, dl, dt, em,embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p,pre, q, ruby, s, samp, section,small, span, strike, strong,sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video{
+    margin:0;
+    padding:0;
+    border:0;
+    /*font: inherit;*/
+    /*vertical-align:baseline;*/
+    /*!*word-break:break-all;*!*/
+    /*word-wrap:break-word;*/
+}
+input{
+    white-space:nowrap;
+}
+*{
+    background-repeat:no-repeat;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+ul,li,ol{
+    list-style:none;
+}
+img{
+    border:none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+html, body{
+    height:100%;
+}
+.content{
+    min-height:100%;
+}
+a{
+    text-decoration:none;
+    border:none;
+    outline:none;
+    tap-highlight-color: rgba(0,0,0,0);
+    focus-ring-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-focus-ring-color: rgba(0,0,0,0);
+    -moz-tap-highlight-color: rgba(0,0,0,0);
+    -moz-focus-ring-color: rgba(0,0,0,0);
+}
+a:visited{
+    color: inherit;
+}
+input,button{
+    outline:none;
+}
+
+#main{
+    width: 90%;
+    height: 250px;
+    margin: auto;
+    position:absolute;
+    border-radius: 4px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+}
+#main ul{
+    margin-top: 15px;
+}
+#main ul li{
+    color: #555;
+    width: 100%;
+    height: 40px;
+    border-bottom: solid #bbb 1px;
+    text-align: center;
+    line-height: 40px;
+}
+#main ul li a{
+    color: #555555;
+}
+.imgsort{
+    position: fixed;
+
+}
+.imgsort .img {
+    width: 100%;
+    height: 100%;
+}
+.imgsort  .close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+#blackBg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 5;
+}
+#enterMessage{
+    background: #fff;
+    width: 100%;
+    height: 100%;
+}
+#message{
+    height: 330px;
+    width: 85%;
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    background: #ffffff;
+    border-radius:5px;
+}
+#close{
+    float: right;
+    width:10%;
+    position: relative;
+    top: -40px;
+}
+#close1{
+    float: right;
+    width:10%;
+    position: relative;
+    top: -40px;
+}
+#content{
+    padding: 20px 20px;
+}
+#content table{
+    width: 100%;
+    height: 100%;
+}
+#content .title{
+    color: #009688;
+    margin-top: 30px;
+    font-size: 16px;
+}
+#content p{
+    margin-top: 10px;
+}

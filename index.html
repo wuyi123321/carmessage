@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>园区车辆管理</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <link href="css/entercss.css" rel="stylesheet">
+</head>
+<body style="background: #efefef">
+<div id="app">
+    <div id="main">
+    <ul>
+        <li @click="showimg">园区车辆分布图</li>
+        <li @click="showimg1">车位分配情况</li>
+        <li @click="showimg2">车位分配规则</li>
+        <li><a href="enter/index.html">轮候人员名单</a></li>
+        <li><a href="weiting/index.html">违规车辆登记</a></li>
+    </ul>
+</div>
+    <div v-show="imgshow" class="imgsort">
+        <img src="images/ic_delete.png" class="close" @click="closeImg">
+        <img class="img" src="images/sort.png">
+    </div>
+    <div v-show="imgshow1" class="imgsort" style="margin-top: 30px">
+        <img src="images/ic_delete.png" class="close" @click="closeImg1">
+        <img class="img" src="images/pic_list3.png">
+    </div>
+    <div id="blackBg" v-show="blackImg">
+        <div id="message">
+            <div id="close"><img src="images/close.png" width="80%" height="80%" @click="closeImg2"></div>
+            <div id="content">
+                <div></div><div class='title'>计算方式</div><p>
+                职位占60%+工作年限占39%+排队天数占1%+住园区宿舍加1分+私车公用加1分-每次违规扣1分</p>
+                <div class='title'>计算方式</div><p>当有车位分配时，按积分从高到低分配，请留意邮件通知</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/vue@2.4.js"></script>
+<script src="js/jquery.js"></script>
+<script>
+  new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                    imgshow:false,
+                    imgshow1:false,
+                    blackImg:false
+            };
+        },
+        methods: {
+            showimg:function(){
+                this.imgshow=true;
+            },
+            closeImg:function () {
+                this.imgshow=false;
+            },
+            showimg1:function(){
+                this.imgshow1=true;
+
+            },
+            closeImg1:function () {
+                this.imgshow1=false;
+            },
+            showimg2:function(){
+                this.blackImg=true;
+            },
+            closeImg2:function () {
+                this.blackImg=false;
+            }
+
+        }});
+</script>
+</html>

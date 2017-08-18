@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+</head>
+<link rel="stylesheet" href="css/eleui.css">
+
+<link rel="stylesheet" href="css/from.css" type="text/css" />
+<style type="text/css">
+    .file {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        text-decoration: none;
+        text-indent: 0;
+    }
+    .file input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+    .file:hover {
+        text-decoration: none;
+    }
+</style>
+<body>
+<div id="app">
+    <table id="content" >
+        <tr>
+            <td class="frow"><div class="justify">违规日期<span></span></div><div class="line"></div></td>
+            <td class="srow"><el-date-picker placeholder="请选择时间" v-model="data">
+            </el-date-picker>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="justify">违规时间<span></span></div><div class="line"></div></td>
+            <td class="srow">
+                <el-time-picker placeholder="请选择时间" v-model="time">
+                </el-time-picker></td>
+        </tr>
+        <tr>
+            <td><div class="justify">车牌<span></span></div><div class="line"></div></td>
+            <td class="srow">
+                <el-popover
+                        ref="popover4"
+                        placement="top"
+                        width="240"
+                        v-model="cityshow"
+                        trigger="click">
+                    <el-table :data="citydData" :border="true" :show-header="false"  @cell-click="selectCity" id="table">
+                        <el-table-column width="40" property="one" label="粤"></el-table-column>
+                        <el-table-column width="40" property="two" label="京"></el-table-column>
+                        <el-table-column width="40" property="three" label="津"></el-table-column>
+                        <el-table-column width="40" property="four" label="粤"></el-table-column>
+                        <el-table-column width="40" property="five" label="京"></el-table-column>
+                        <el-table-column width="40" property="six" label="津"></el-table-column>
+                    </el-table>
+                </el-popover>
+                <el-button v-popover:popover4 id="butt">粤</el-button>
+
+                <el-select
+                        v-model="FD_PLATENUMBER"
+                        filterable
+                        remote
+                        placeholder="请输入车牌号"
+                        :remote-method="remoteMethod"
+                        :loading="loading" @change="getmessage" id="number">
+                    <el-option
+                            v-for="item in options4"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+
+            </td>
+        </tr>
+        <tr>
+            <td><div class="justify">姓名<span></span></div><div class="line"></div></td>
+            <td class="srow"><el-input type="text"  placeholder="请输入姓名" v-model="FD_NAME"></el-input></td>
+        </tr>
+        <tr>
+            <td><div class="justify">职务<span></span></div><div class="line"></div></td>
+            <td class="srow"><el-input type="text"  placeholder="请输入职务" v-model="FD_POST"></el-input></td>
+        </tr>
+
+        <tr>
+            <td><div class="justify">归属部门<span></span></div><div class="line"></div></td>
+            <td class="srow"><el-input type="text"  placeholder="请输入归属部门" v-model="FD_DEPT"></el-input></td>
+        </tr>
+
+        <tr>
+            <td><div class="justify">联系电话<span></span></div><div class="line"></div></td>
+            <td class="srow"><el-input type="text"  placeholder="请输入联系电话" v-model=" FD_PHONE"></el-input></td>
+        </tr>
+        <tr>
+            <td><div class="justify">违规类型<span></span></div><div class="line"></div></td>
+            <td class="srow">
+                <el-select v-model="wdtype" placeholder="请选择违规类型">
+                    <el-option
+                            v-for="item in wttypes"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="justify">园区<span></span></div><div class="line"></div></td>
+            <td class="srow">
+                <el-select v-model="wtaddress" placeholder="请选择违停厂区">
+                    <el-option
+                            v-for="item in wtaddresses"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="justify">备注<span></span></div><div class="line"></div></td>
+            <td class="srow"><el-input type="text"  placeholder="其他违规说明" v-model="remark"></el-input></td>
+        </tr>
+    </table>
+    <div id="smallimages" @click='det'>
+
+    </div>
+    <div class="cream">
+        <img src="images/ic_photo.png" width="80px" @click="visible=true">
+    </div>
+    <div id="tijiao" ><el-button>提交</el-button></div>
+    <div id="blackBg" v-show="visible">
+        <div id="message">
+            <form id="form">
+            <ul>
+                <li class="file">
+                    <input type="file" accept="image/*"  id="inputfile1"  @change="preImg1()">
+                从手机选择
+                </li>
+                <li class="file">
+                    <input type="file" accept="image/*" capture="camera"  id="inputfile" @change="preImg()">
+                    拍照
+                </li>
+            </ul>
+            </form>
+        </div>
+        <div id="close" @click="visible=false">取消</div>
+    </div>
+    <div id="blackBg2" v-show="showImage" @click="close">
+
+    </div>
+</div>
+
+</body>
+<script src="../js/vue@2.4.js"></script>
+<!-- 引入组件库 -->
+<script src="../js/elejs.js"></script>
+<script src="../js/jquery.js"></script>
+<script src="../js/formdata.js"></script>
+
+<!--//<script src="js/elejs.js"></script>-->
+</html>
