@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>违停登记</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
@@ -31,6 +31,16 @@
     }
 </style>
 <body>
+<div id="blackBg3" style="display:none;width: 100%;height: 100%;background: rgba(0,0,0,0.6);position: fixed;
+    z-index: 100;color: #ffffff;text-align: center;padding-top: 50%;
+">正在提交中...
+<span id="revot" style="color: #009688;display: block;margin: 20px auto;border-radius: 5px;border: solid 1px #ffffff;width: 20%;height: 35px;line-height: 35px">取消上传</span>
+</div>
+<div style="z-index:10;position: fixed;bottom: 100px;right: 30px;width: 40px;height: 40px;background: rgba(0,0,0,0.1);">
+    <a href="javascript:history.go(-1)" style="border: solid #bbb 1px; width: 100%;height: 100%;position: absolute">
+        <img src="images/back.png" width="39" height="39">
+    </a> 
+</div>
 <div id="app">
     <table id="content" >
         <tr>
@@ -142,11 +152,11 @@
             <form id="form">
             <ul>
                 <li class="file">
-                    <input type="file" accept="image/*"  id="inputfile1"  @change="preImg1()">
+                    <input type="file" accept="image/*"  id="inputfile1"  @change="preImg1()" >
                 从手机选择
                 </li>
                 <li class="file">
-                    <input type="file" accept="image/*" capture="camera"  id="inputfile" @change="preImg()">
+                    <input type="file" accept="image/*" capture="camera"  id="inputfile" @change="preImg()" >
                     拍照
                 </li>
             </ul>
@@ -157,6 +167,7 @@
     <div id="blackBg2" v-show="showImage" @click="close">
 
     </div>
+
 </div>
 
 </body>

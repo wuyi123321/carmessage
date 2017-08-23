@@ -75,7 +75,7 @@
     width: 100%;
     height:100%;
     background: rgba(0,0,0,0.6);
-    z-index: 5;
+    z-index: 100;
     color: #009688;
     font-size: 16px;
 }
@@ -86,7 +86,7 @@
     width: 100%;
     height:100%;
     background: rgba(0,0,0,0.6);
-    z-index: 5;
+    z-index: 100;
     padding: 0 auto;
 }
 
@@ -97,6 +97,7 @@
     right: 0px;
     bottom: 0px;
     margin: auto;
+    z-index: 100;
 }
 #bigImg img{
     width: 100%;
@@ -106,6 +107,7 @@
     right: 0px;
     bottom: 0px;
     margin: auto;
+    z-index: 100;
 }
 #message{
      margin: 45% auto 0 auto;

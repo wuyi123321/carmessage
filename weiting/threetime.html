@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>所有车辆信息</title>
+    <title>违停三次以上信息</title>
     <meta name="generator" content="editplus" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width">
@@ -15,12 +15,13 @@
 <div id="result">
      <div id="head">
          <div id="search">
-             <input type="text"  placeholder="请输入车牌号">
+             <input type="text"  placeholder="输入车牌号进行查询">
              <img src="images/search.png">
          </div>
          <div id="chufa">处罚措施</div>
-         <div id="threeTime"><a>严重名单</a></div>
+         <div id="threeTime"><a>所有名单</a></div>
          <div id="weiting"><a>登记</a></div>
+
          <table >
             <thead>
              <td width='60px'></td>
@@ -32,11 +33,6 @@
      </div>
     <div id="bod">
     </div>
-</div>
-<div style="position: fixed;bottom: 100px;right: 30px;width: 40px;height: 40px;background: rgba(0,0,0,0.1);z-index: 10">
-    <a href="javascript:history.go(-1)" style="border: solid #bbb 1px; width: 100%;height: 100%;position: absolute">
-        <img src="images/back.png" width="39" height="39">
-    </a>
 </div>
 <div id="blackBg">
     <div id="message">
@@ -55,6 +51,11 @@
         <span id="queding">确定</span>
     </div>
 </div>
+<div style="position: fixed;bottom: 100px;right: 30px;width: 40px;height: 40px;background: rgba(0,0,0,0.1);z-index: 10">
+    <a href="javascript:history.go(-1)" style="border: solid #bbb 1px; width: 100%;height: 100%;position: absolute">
+        <img src="images/back.png" width="39" height="39">
+    </a>
+</div>
 <div id="alert">
     <div id="almessage">无权限操作
         <hr>
@@ -64,5 +65,5 @@
 </body>
 <script src="../js/jquery.js"></script>
 
-<script src="../js/index2.js"></script>
+<script src="../js/threetime.js"></script>
 </html>

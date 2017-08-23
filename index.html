@@ -11,21 +11,40 @@
 <body style="background: #efefef">
 <div id="app">
     <div id="main">
-    <ul>
+     <ul>
         <li @click="showimg">园区车辆分布图</li>
         <li @click="showimg1">车位分配情况</li>
         <li @click="showimg2">车位分配规则</li>
-        <li><a href="enter/index.html">轮候人员名单</a></li>
-        <li><a href="weiting/index.html">违规车辆登记</a></li>
-    </ul>
-</div>
-    <div v-show="imgshow" class="imgsort">
-        <img src="images/ic_delete.png" class="close" @click="closeImg">
-        <img class="img" src="images/sort.png">
+        <li @click="listWiter">轮候人员名单</li>
+        <li @click="weiting">违规车辆登记</li>
+     </ul>
     </div>
-    <div v-show="imgshow1" class="imgsort" style="margin-top: 30px">
-        <img src="images/ic_delete.png" class="close" @click="closeImg1">
-        <img class="img" src="images/pic_list3.png">
+    <div v-show="imgshow" class="imgsort" id="show1" style="margin-top: 30px">
+        <div style="width:100%;text-align: center;position: relative;top: -20px;">园区车辆分布图
+            <select @change="changeImg1" v-model="areaImg" >
+                <option value="石龙仔">石龙仔</option>
+                <option value="光明">光明</option>
+                <option value="惠州">惠州</option>
+            </select>
+        </div>
+        <div class="images" >
+        <img src="images/ic_delete.png" class="close" @click="closeImg">
+        <img class="img"  v-bind:src="listImg2">
+        </div>
+    </div>
+    <div v-show="imgshow1" class="imgsort" id="show2">
+        <div style="width:100%;text-align: center;height:35px;line-height: 35px">车位分配情况图
+            <select @change="changeImg" v-model="areaImg" disabled>
+            <option value="石龙仔">石龙仔</option>
+            <option value="光明">光明</option>
+            <option value="惠州">惠州</option>
+        </select>
+        </div>
+        <div class="images" >
+            <img src="images/ic_delete.png" class="close" @click="closeImg1">
+            <img class="img" v-bind:src="listImg">
+        </div>
+
     </div>
     <div id="blackBg" v-show="blackImg">
         <div id="message">
@@ -33,30 +52,48 @@
             <div id="content">
                 <div></div><div class='title'>计算方式</div><p>
                 职位占60%+工作年限占39%+排队天数占1%+住园区宿舍加1分+私车公用加1分-每次违规扣1分</p>
-                <div class='title'>计算方式</div><p>当有车位分配时，按积分从高到低分配，请留意邮件通知</p>
+                <div class='title'>分配说明</div><p>当有车位分配时，按积分从高到低分配，请留意邮件通知!!!</p>
             </div>
         </div>
     </div>
 </div>
 </body>
+
 <script src="js/vue@2.4.js"></script>
 <script src="js/jquery.js"></script>
-<script>
+<script type="text/javascript">
+
+
+    (function ($) {
+        $.getUrlParam = function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);  return null;
+        }
+    })(jQuery);
+var token=$.getUrlParam("token");
+var a;
+var b;
   new Vue({
         el: '#app',
         data: function() {
             return {
                     imgshow:false,
                     imgshow1:false,
-                    blackImg:false
+                    blackImg:false,
+                    areaImg:"石龙仔",
+                    listImg :"images/pic_list3.png",
+                    listImg2 :"images/sort.png"
             };
         },
         methods: {
             showimg:function(){
                 this.imgshow=true;
+
             },
             closeImg:function () {
                 this.imgshow=false;
+
             },
             showimg1:function(){
                 this.imgshow1=true;
@@ -70,8 +107,55 @@
             },
             closeImg2:function () {
                 this.blackImg=false;
+            },
+            changeImg:function () {
+                console.log(this.areaImg);
+                     if(this.areaImg=="石龙仔"){
+                    this.listImg = "images/pic_list3.png"
+                  } else if(this.areaImg=="光明"){
+                    this.listImg = "images/pic_list4.png"
+                  }else {
+                         this.listImg = "images/pic_list2.png"
+                     }
+            },
+            changeImg1:function () {
+                console.log(this.areaImg);
+                if(this.areaImg=="石龙仔"){
+                    this.listImg2 = "images/sort.png"
+                } else if(this.areaImg=="光明"){
+                    this.listImg2 = "images/guang.png"
+                }
+//                else {
+//                    this.listImg = "images/pic_list2.png"
+//                }
+            },
+            listWiter:function () {
+                window.location.href="enter/index.html?token="+token+"";
+            },
+            weiting:function (){
+                $.ajax({
+                    type:"post",
+                    url:"http://appinter.sunwoda.com/ekp/ekpVehicleInfoDetail.json",
+                    dataType:"json",
+                    data: {"token":token},
+                    success:function (data) {
+                        console.log(data);
+                       if(data.extData==0){//管理员登录
+                           window.location.href="weiting/index.html?token="+token+"";
+                       }else if (data.extData==1 ){//非管理员登录
+                           if(data.dataInfo != null){
+                               window.location.href="weiting/message.html?token="+token+"&plateNumber="+data.dataInfo.listData[0]["FD_PLATENUMBER"]+"&area=main";
+                           }else {
+                               alert("无权限操作")
+                           }
+                       }else {
+                           alert(data.message);
+                       }
+                    }
+                });
             }
 
         }});
+
 </script>
 </html>

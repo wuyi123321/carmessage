@@ -21,17 +21,17 @@ Date.prototype.format = function(fmt) {
     return fmt;
 }
 //本地资源暂存服务器
-function getFileUrl(inputid) {
-    console.log(document.getElementById(inputid).files[0]);
+function getFileUrl(inputid,i) {
+    console.log(document.getElementById(inputid).files[i]);
     var url;
     if (navigator.userAgent.indexOf("MSIE")>=1) { // IE
         url = document.getElementById("inputfile").value;
     } else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox
-        url = window.URL.createObjectURL(document.getElementById(inputid).files.item(0));
+        url = window.URL.createObjectURL(document.getElementById(inputid).files.item(i));
     } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome
-        url = window.URL.createObjectURL(document.getElementById(inputid).files.item(0));
+        url = window.URL.createObjectURL(document.getElementById(inputid).files.item(i));
     }else {
-        url = window.webkitURL.createObjectURL(document.getElementById(inputid).files[0]);
+        url = window.webkitURL.createObjectURL(document.getElementById(inputid).files[i]);
     }
     return url;
 }
@@ -247,27 +247,30 @@ var a= new Vue({
             this.showImage=false;
         },
         preImg:function(){
-            flag++;
+
             this.visible=false;
-            imgsrcs.push(document.getElementById("inputfile").files[0]);//获取表单文件往imgsrcs里加
-            console.log("aa"+document.getElementById("inputfile").files[0]);
-            var src = getFileUrl("inputfile");
-            console.log(src);
-            $("#smallimages").append("<div class='cream'>"+
-                "<img width='19px' height='19px' src='../weiting/images/ic_delete.png' class='delete' @click='det' num='"+flag+"'>"+
-                "<img class='smallimg' width='80px' height='80px' src='"+src+"'> </div>");
+for(var i = 0;i<document.getElementById("inputfile").files.length;i++){
+    flag++;
+    imgsrcs.push(document.getElementById("inputfile").files[i]);//获取表单文件往imgsrcs里加
+    var src = getFileUrl("inputfile",i);
+    console.log(src);
+    $("#smallimages").append("<div class='cream'>"+
+        "<img width='19px' height='19px' src='../weiting/images/ic_delete.png' class='delete' @click='det' num='"+flag+"'>"+
+        "<img class='smallimg' width='80px' height='80px' src='"+src+"'> </div>");
+}
             console.log(imgsrcs);
         },
         preImg1:function(){
             this.visible=false;
-            flag++;
-            imgsrcs.push(document.getElementById("inputfile1").files[0]);//获取表单文件往imgsrcs里加
-            console.log("aa"+document.getElementById("inputfile").files[0]);
-            var src = getFileUrl("inputfile1");
-            console.log(src);
-            $("#smallimages").append("<div class='cream'>"+
-                "<img width='19px' height='19px' src='../weiting/images/ic_delete.png' class='delete' @click='det'  num='"+flag+"'>"+
-                "<img class='smallimg' width='80px' height='80px' src='"+src+"'> </div>");
+            for(var i = 0;i<document.getElementById("inputfile1").files.length;i++){
+                flag++;
+                imgsrcs.push(document.getElementById("inputfile1").files[i]);//获取表单文件往imgsrcs里加
+                var src = getFileUrl("inputfile1",i);
+                console.log(src);
+                $("#smallimages").append("<div class='cream'>"+
+                    "<img width='19px' height='19px' src='../weiting/images/ic_delete.png' class='delete' @click='det' num='"+flag+"'>"+
+                    "<img class='smallimg' width='80px' height='80px' src='"+src+"'> </div>");
+            }
             console.log(imgsrcs);
         },
     }
@@ -290,15 +293,23 @@ $.ajax({
         });
     }
 });
+var submit;
+var phone = a.FD_PHONE.split("/")[0];
 var datetime =a.data.format("yyyy-MM-dd")+" "+a.time.format("hh:mm:ss");
-
+$("#revot").on("click",function () {
+    $("#blackBg3").css("display","none");
+    submit.abort();
+});
 $("#tijiao").bind('click',0,function(){
     console.log(imgsrcs);
-     //提交判断
-     if(a.time==null || a.FD_PLATENUMBER==null || a.wtaddress=="" || a.wdtype=="" || imgsrcs == []){
+
+    // 提交判断
+     if(a.FD_PLATENUMBER=="" ||a.FD_PLATENUMBER==undefined || a.time==null
+         ||a.time==undefined || a.FD_PLATENUMBER==null || a.wtaddress=="" || a.wdtype=="" || imgsrcs.length==0){
          alert("请填写完整信息");
     }else {
         //送给后台数据封装
+         $("#blackBg3").css("display","block");
     var formData = new FormData();
     for(var k in imgsrcs){ //文件数组
              formData.append('files',imgsrcs[k]);
@@ -313,7 +324,8 @@ $("#tijiao").bind('click',0,function(){
     formData.append('FD_PHONE',a.FD_PHONE);
     formData.append('token',token);
     formData.append('FD_VIOLATIONDATE',datetime);
-        $.ajax({
+
+      submit=  $.ajax({
             url: "http://appinter.sunwoda.com/ekp/ekpContentVehicle.json",
             type: "post",
             data:formData,
@@ -325,22 +337,40 @@ $("#tijiao").bind('click',0,function(){
                 console.log(dae);
                 var obj = JSON.parse(dae);
                 if(obj["statusCode"]==0){
+                    $("#blackBg3").css("display","none");
                     alert(obj["message"]);
                     a.FD_PLATENUMBER='';
                     a.FD_NAME='';
                     a.FD_POST='';
                     a.FD_DEPT='';
-                    a.FD_PHONE='';
                     imgsrcs=[];
                     flag=0;
                     $("#smallimages").html("");
+                    $.ajax({
+                        type:"post",
+                        url:"http://appinter.sunwoda.com/ekp/sendVehicleNotice.json",
+                        dataType:"json",
+                        data: {"FD_PHONE":phone,
+                            "message":datetime
+                        },
+                        success:function(data){
+                            a.FD_PHONE='';
+                            console.log(data);
+
+                        }});
                 }else {
                     alert(obj["message"]);
                 }
-            }
+            },
+          error:function () {
+              $("#blackBg3").css("display","none");
+              alert("错误请求");
+          }
         })
   }
 
 });
+
+
 
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>message</title>
+    <title>个人违停信息</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
@@ -33,6 +33,22 @@
     <!--</li>-->
 </ul>
 </div>
+<div id="black">
+    <div id="message">
+        <div class="title">车辆违规处罚措施</div>
+        <ol>
+            <li>1. 违规超过3次的车辆由安全管理部没收通行标志,重新进入轮候队伍,在积分中每违规1次扣1分</li>
+            <li>2. 无通行证着,违规超过3次,拉入黑名单</li>
+            <li>3. 外部车辆,第一次违规警告,第二次违规锁车并处以罚款,超过三次拉入黑名单</li>
+        </ol>
+        <span id="queding">确定</span>
+    </div>
+</div>
+<div style="position: fixed;bottom: 100px;right: 30px;width: 40px;height: 40px;background: rgba(0,0,0,0.1);z-index: 10">
+    <a href="javascript:history.go(-1)" style="border: solid #bbb 1px; width: 100%;height: 100%;position: absolute">
+        <img src="images/back.png" width="39" height="39">
+    </a>
+</div>
 </body>
 <script src="../js/vue@2.4.js"></script>
 <script src="../js/elejs.js"></script>
@@ -47,6 +63,13 @@
     })(jQuery);
     var plateNumber= $.getUrlParam("plateNumber");
     var token = $.getUrlParam("token");
+    var aera = $.getUrlParam("area");
+    if(aera=="main"){
+        $("#black").css("display","block");
+    }
+    $("#queding").on("click",function () {
+        $("#black").css("display","none");
+    });
     var type=["占用专用车位","占用消防通道","非停车位处停车","车辆未在18：00移出篮球场","持篮球场通行证车辆占用园内车位","其它"];
     $.ajax({
         type:"post",
@@ -54,6 +77,7 @@
         dataType:"json",
         data: {"token":token,"plateNumber":plateNumber},
         success:function(data){
+            console.log(data);
             if(data.dataInfo != null){
                      $("#ul").empty();
                      console.log(data);

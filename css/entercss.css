@@ -72,17 +72,27 @@ input,button{
     color: #555555;
 }
 .imgsort{
-    position: fixed;
-
+    position:absolute;
 }
 .imgsort .img {
     width: 100%;
     height: 100%;
 }
-.imgsort  .close{
+.imgsort .close{
+    width: 26px;
+    height: 26px;
     position: absolute;
     right: 10px;
-    top: 10px;
+    top: 5px;
+}
+.images{
+    position: relative;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #ffffff;
+    border: solid #aaa 1px;
 }
 #blackBg{
     position: fixed;

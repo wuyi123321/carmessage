@@ -14,7 +14,7 @@ input{
     background-repeat:no-repeat;
     -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
-ul,li,ol{
+ul,li{
     list-style:none;
 }
 img{
@@ -54,12 +54,21 @@ input,button{
     font-family: 微软雅黑;
     font-size: 17px;
 }
-#main ul li i{
+
+#main ul li a{
+    width: 100%;
+    height: 100%;
     color: #8c939d;
     position: absolute;
-    right: 50px;
+    top: 0;
+    left: 0;
+}
+#main ul li a i{
+    position: absolute;
+    right: 40px;
     top: 50px;
 }
+
 .top{
     color: #4db3ff;
 }
@@ -78,4 +87,45 @@ input,button{
 .content .cont span{
     padding-left: 10px;
     color: #222;
+}
+
+#black{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+    top: 0;
+}
+#message{
+    width: 80%;
+    height: 50%;
+    background: #ffffff;
+    border-radius: 5px;
+    position: absolute;
+    top:0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+#message ol{
+    margin: 20px 25px;
+}
+#message ol li{
+margin-top: 15px;
+}
+#queding{
+    color: #009688;
+    display: block;
+    float: right;
+    padding-right: 30px;
+}
+#message .title{
+    width: 100%;
+    height: 40px;
+    line-height: 60px;
+    text-align: center;
+    color: #009688;
 }

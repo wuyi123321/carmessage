@@ -1,10 +1,9 @@
 $(document).ready(function(){
-
+    var music="";
     var pageNo=1;
     var local = "http://appinter.sunwoda.com/ekp/ekpVehicleInfoDetail.json";
     token = GetQueryString("token");
     var fn=function(data){
-        var music="";
         console.log(data);
         if(data.dataInfo != null){
             data=data.dataInfo.listData;
@@ -32,11 +31,6 @@ $(document).ready(function(){
                             "</td><td width='80px' style='background: #ff8' class='aa b1' id="+i+">"+n["FD_NAME"].substring(-1,3)+"</td>"+
                             "<td class='aa b2' style='background: #ff8' id="+i+">"+n["FD_PLATENUMBER"]+"</td>"+
                             "<td class='aa b3' style='background: #ff8' id="+i+">"+dB+"</td></tr>";
-                    }else {
-                        music+="<tr><td td width='60px'><a href='tel:"+n["FD_PHONE"]+"'><img src='"+imgsrc+"'></a>" +
-                            "</td><td width='80px' class='aa b1' id="+i+">"+n["FD_NAME"].substring(-1,3)+"</td>"+
-                            "<td class='aa b2' id="+i+">"+n["FD_PLATENUMBER"]+"</td>"+
-                            "<td class='aa b3' id="+i+">"+dB+"</td></tr>";
                     }
                 }else {
                     imgsrc="images/call.png";
@@ -45,24 +39,14 @@ $(document).ready(function(){
                             "</td><td width='80px' class='aa b1'  style='background: #ff8' id="+i+">"+n["FD_NAME"].substring(-1,3)+"</td>"+
                             "<td class='aa b2' style='background: #ff8' id="+i+">"+n["FD_PLATENUMBER"]+"</td>"+
                             "<td class='aa b3' style='background: #ff8' id="+i+">"+dB+"</td></tr>";
-                    }else {
-                        music+="<tr><td td width='60px'><a href='tel:"+n["FD_PHONE"]+"'><img src='"+imgsrc+"'></a>" +
-                            "</td><td width='80px' class='aa b1' id="+i+">"+n["FD_NAME"].substring(-1,3)+"</td>"+
-                            "<td class='aa b2' id="+i+">"+n["FD_PLATENUMBER"]+"</td>"+
-                            "<td class='aa b3' id="+i+">"+dB+"</td></tr>";
                     }
                 }
             });
             $('#bod').append("<table >"+music+"</table>");
             $(".aa").bind('click',[1],function(){
+                $("#bod").css("position","fixed");
                 $("#blackBg").css("display","block");
                 var j=this.getAttribute("id");
-
-                if(data[j]["FD_DEPT"].length>15){
-                    data[j]["FD_DEPT"]=data[j]["FD_DEPT"].substring(-1,15)+"...";
-                }else {
-                    data[j]["FD_DEPT"]=data[j]["FD_DEPT"];
-                }
                 message="<tr><td class='one'>姓名</td>"
                     + "<td>"+data[j]["FD_NAME"]+"</td></tr>"
                     + "<td class='one'>手机</td>"
@@ -139,6 +123,26 @@ $(document).ready(function(){
         }
     });
 });
+$("#weiting").bind('click',[],function () {
+   window.location.href="from.html?token="+token+"";
+});
+$("#threeTime").bind('click',[],function () {
+    window.location.href="index.html?token="+token+"";
+});
+
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if(r != null)
+        return(r[2]);
+    return null;
+}
+$("#chufa").on("click",function () {
+    $("#black2").css("display","block");
+});
+$("#queding").on("click",function () {
+    $("#black2").css("display","none");
+});
 $("#search input").bind('focus',[1],function (){
     //$("#search").css("width","90%");
     $("#search").animate({
@@ -158,25 +162,6 @@ $("#search input").bind('blur',[1],function (){
     $("#threeTime").css("display","block");
 });
 
-$("#weiting").bind('click',[],function () {
-   window.location.href="from.html?token="+token+"";
-});
-$("#threeTime").bind('click',[],function () {
-    window.location.href="threetime.html?token="+token+"";
-});
-$("#chufa").on("click",function () {
-    $("#black2").css("display","block");
-});
-$("#queding").on("click",function () {
-    $("#black2").css("display","none");
-});
-function GetQueryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-    var r = window.location.search.substr(1).match(reg);
-    if(r != null)
-        return(r[2]);
-    return null;
-}
 function goToUrlHtml(url) {
     token = GetQueryString("token");
     location.href = url + "?token=" + token;

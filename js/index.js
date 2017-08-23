@@ -76,7 +76,7 @@ $(document).ready(function(){
             $("#bod").css("position","absolute");
             $(window).bind('scroll',[1],fn1);
         });
-    }
+    };
     var fn1=function() {
         message="";
         if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
@@ -92,7 +92,7 @@ $(document).ready(function(){
                 success:fn
             });
         }
-    }
+    };
     $.ajax({
         type:"get",
         //url:"http://172.16.110.68:9000/swdAPP/ekp/ekpContactQuery.json?token=028d562ee5987baedf694766ccc35268",
